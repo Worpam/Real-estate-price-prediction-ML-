@@ -8,20 +8,32 @@ tf.util.shuffleCombo(INPUTS, OUTPUTS);
 const TENSOR_INPUTS=tf.tensor2d(INPUTS);
 const TENSOR_OUTPUTS=tf.tensor1d(OUTPUTS);
 
+// function normalize(tensor, min, max){
+//     const result=tf.tidy(function(){
+//         const MIN_VALUES=min || tf.min(tensor,0);
+//         const MAX_VALUES=max || tf.max(tensor,0);
+//         const TENSOR_SUB_MIN_VALUES=tf.sub(tensor, MIN_VALUES);
+//         const RANGE=tf.sub(MAX_VALUES, MIN_VALUES);
+//         const NORMALIZE_VALUE=tf.div(TENSOR_SUB_MIN_VALUES, RANGE);
+        
+//         return {NORMALIZE_VALUE, MIN_VALUES, MAX_VALUES};
+
+
+//     });
+//     return result;
+// }
 function normalize(tensor, min, max){
     const result=tf.tidy(function(){
-        const MIN_VALUES=min || tf.min(tensor,0);
-        const MAX_VALUES=max || tf.max(tensor,0);
+        const MIN_VALUE=min|| tf.min(tensor, 0);
+        const MAX_VALUE=max || tf.max(tensor, 0);
         const TENSOR_SUB_MIN_VALUES=tf.sub(tensor, MIN_VALUES);
-        const RANGE=tf.sub(MAX_VALUES, MIN_VALUES);
+        const RANGE=tf.sub(MAX_VALUE,MIN_VALUE);
         const NORMALIZE_VALUE=tf.div(TENSOR_SUB_MIN_VALUES, RANGE);
-        
-        return {NORMALIZE_VALUE, MIN_VALUES, MAX_VALUES};
-
-
+        return {NORMALIZE_VALUE,MIN_VALUE,MAX_VALUE};
     });
     return result;
 }
+                  
 
 const FEATURE_RESULTS= normalize(TENSOR_INPUTS);
 
