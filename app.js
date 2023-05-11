@@ -22,6 +22,8 @@ const TENSOR_OUTPUTS=tf.tensor1d(OUTPUTS);
 //     });
 //     return result;
 // }
+
+//rewriting a noralize function
 function normalize(tensor, min, max){
     const result=tf.tidy(function(){
         const MIN_VALUE=min|| tf.min(tensor, 0);
